@@ -30,33 +30,30 @@ route.patch('/:order_id', Validation, controllers.Update) //require validation
 route.delete('/:order_id', Validation, controllers.Delete) //require validation
 
 
-###Data Shapes
+### Data Shapes
 
-##users
-    id uuid DEFAULT uuid_generate_v4(),
-    email VARCHAR(150) UNIQUE,
-    username VARCHAR(150) NOT NULL,
-    password VARCHAR(255) NOT NULL
+    ## users
+        id uuid DEFAULT uuid_generate_v4(),
+        email VARCHAR(150) UNIQUE,
+        username VARCHAR(150) NOT NULL,
+        password VARCHAR(255) NOT NULL
 
-##products
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
-    price VARCHAR(50) NOT NULL,
-    quantity INTEGER DEFAULT 0 
+    ## products
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(50) NOT NULL,
+        price VARCHAR(50) NOT NULL,
+        quantity INTEGER DEFAULT 0 
 
-##orders
-    id uuid DEFAULT uuid_generate_v4 () PRIMARY KEY,
-    user_id uuid DEFAULT uuid_generate_v4 () NOT NULL,  
-    order_status VARCHAR(50) NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users (id) 
+    ## orders
+        id uuid DEFAULT uuid_generate_v4 () PRIMARY KEY,
+        user_id uuid DEFAULT uuid_generate_v4 () NOT NULL,  
+        order_status VARCHAR(50) NOT NULL,
+        FOREIGN KEY (user_id) REFERENCES users (id) 
 
-
-## products order
-    product_order_id uuid DEFAULT uuid_generate_v4 () PRIMARY KEY,
-    product_id uuid DEFAULT uuid_generate_v4 (), 
-    order_id uuid DEFAULT uuid_generate_v4 (), 
-    order_quantity INTEGER NOT NULL , 
-    FOREIGN KEY (product_id) REFERENCES products (id),
-    FOREIGN KEY (order_id) REFERENCES orders (id)     
-
-
+    ## products order
+        product_order_id uuid DEFAULT uuid_generate_v4 () PRIMARY KEY,
+        product_id uuid DEFAULT uuid_generate_v4 (), 
+        order_id uuid DEFAULT uuid_generate_v4 (), 
+        order_quantity INTEGER NOT NULL , 
+        FOREIGN KEY (product_id) REFERENCES products (id),
+        FOREIGN KEY (order_id) REFERENCES orders (id)    

@@ -40,22 +40,16 @@ class UserModel {
     }
   }
 
-  // +[2]get all users
+
   async index(): Promise<User[]> {
     try {
-      // open connection with database
       const conn = await db.connect();
 
-      // query for postgres
       const sql = 'SELECT email, username from users';
 
-      // run sql query
       const result = await conn.query(sql);
 
-      // release database connection
       conn.release();
-
-      // return users
       return result.rows;
     } catch (error) {
       throw new Error((error as Error).message
@@ -63,19 +57,14 @@ class UserModel {
     }
   }
 
-  // +[3] get specific user
   async show(id: string): Promise<User> {
     try {
-      // database connection
       const conn = await db.connect();
 
-      // sql query
       const sql = `SELECT  id, email, username FROM users WHERE id=$1`;
 
-      // run sql query
       const result = await conn.query(sql, [id]);
 
-      // release database connection
       conn.release();
 
       return result.rows[0];
@@ -85,13 +74,10 @@ class UserModel {
     }
   }
 
-  // +[4] update user
   async update(user: User): Promise<User> {
     try {
-      // connection
       const conn = await db.connect();
 
-      // sql query
       const sql = `UPDATE users
                     SET email=$1, username=$2, password=$3
                     WHERE id=$4

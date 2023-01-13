@@ -45,9 +45,18 @@ route.delete('/:order_id', Validation, controllers.Delete) //require validation
     quantity INTEGER DEFAULT 0 
 
 ##orders
-    id SERIAL PRIMARY KEY,
-    product_id INTEGER,
-    user_email VARCHAR(60),
-    quantity INTEGER DEFAULT 1,
-    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (user_email) REFERENCES users(email) ON DELETE CASCADE ON UPDATE CASCADE
+    id uuid DEFAULT uuid_generate_v4 () PRIMARY KEY,
+    user_id uuid DEFAULT uuid_generate_v4 () NOT NULL,  
+    order_status VARCHAR(50) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users (id) 
+
+
+## products order
+    product_order_id uuid DEFAULT uuid_generate_v4 () PRIMARY KEY,
+    product_id uuid DEFAULT uuid_generate_v4 (), 
+    order_id uuid DEFAULT uuid_generate_v4 (), 
+    order_quantity INTEGER NOT NULL , 
+    FOREIGN KEY (product_id) REFERENCES products (id),
+    FOREIGN KEY (order_id) REFERENCES orders (id)     
+
+
